@@ -1,0 +1,10 @@
+FROM php:alpine
+
+RUN docker-php-ext-install mysqli
+
+EXPOSE 8080
+USER www-data
+VOLUME /home/www-data
+
+
+CMD ["php", "-S",  "0.0.0.0:8080", "-t", "/home/www-data"]

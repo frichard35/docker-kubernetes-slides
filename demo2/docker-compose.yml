@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  web:
+    build: Dockerfile-web
+    build:
+      context: ./
+      dockerfile: Dockerfile-web
+    container_name: myweb
+    volumes:
+      - ".:/home/www-data"
+    ports:
+      - 8080:8080
+    networks:
+      private_nw:
+    environment:
+      GESTION_DB_HOST: 'mariadb'
+      GESTION_DB_USER: 'root'
+      GESTION_DB_PASSWORD: 'password'
+
+  mariadb:
+    image: mariadb:latest
+    container_name: mydb
+    volumes:
+      - ".:/docker-entrypoint-initdb.d"
+    environment:
+      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_DATABASE: 'gestion'
+    networks:
+      private_nw:
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: myadmin
+    volumes:
+      - /sessions
+    ports:
+      - 8090:80
+    environment:
+      PMA_HOST: 'mydb'
+    depends_on:
+      - mariadb
+    networks:
+      private_nw:
+
+networks:
+  private_nw:
