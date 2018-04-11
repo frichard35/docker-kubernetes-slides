@@ -11,7 +11,7 @@
 Note: Ne marche que sous linux
 
 
-## Docker on Windows and Mac OS</h2>
+## Docker on Windows and Mac OS
 * Docker toolbox
   * Based on Virtualbox.
   * Compatible windows / Mac OS
@@ -22,8 +22,9 @@ Note: Ne marche que sous linux
 Note:Demo 0 (isolation pid + user)  
 screen ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/tty
   
-tail -f /etc/passwd
-docker run -d alpine --user ftp tail -f /etc/passwd
+tail -f /etc/passwd &
+
+docker run -d --user ftp --name test alpine tail -f /etc/passwd
 
 
 
@@ -43,15 +44,12 @@ docker run --name mydb \
 -p 3306:3306 \  
 -v $(pwd):/docker-entrypoint-initdb.d \  
 -d mariadb  
-  
+
+cat < /dev/tcp/localhost/3306
+
+ifconfig > watch en0 ip
+
 docker run -ti --rm mariadb mysql -u root -h 10.0.1.12 -p
-
-
-
-## docker registry
-* Reuse the storage layer mechanism
-* Public or Private
-* Smooth and effective usage
 
 
 
@@ -59,6 +57,13 @@ docker run -ti --rm mariadb mysql -u root -h 10.0.1.12 -p
 #### Use docker declaratively with yaml files
 Note: Demo 2 (docker-compose)
 docker-compose up
+
+
+
+## docker registry
+* Reuse the storage layer mechanism
+* Public or Private
+* Smooth and effective usage
 
 
 
@@ -147,4 +152,4 @@ kubectl scale deployments/demo-web --replicas=3
 
 
 ## Questions ?
-
+https://github.com/frichard35/docker-kubernetes-slides
